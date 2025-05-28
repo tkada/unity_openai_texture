@@ -1,0 +1,7 @@
+{
+    "name": "jp.tkada.unityopenaitexture",
+    "version": "1.0.0",
+    "displayName": "OpenAI Texture Creator",
+    "description": "OpenAI Texture Creator for Unity",
+    "unity": "2020.2"
+}
