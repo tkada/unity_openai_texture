@@ -12,7 +12,7 @@ namespace OpenAI
 {
     public class OpenAITextureCreator : EditorWindow
     {
-        [MenuItem("Tools/OpenAI Texture Creator")]
+        [MenuItem("Tools/OpenAI/Texture Creator")]
         public static void ShowWindow()
         {
             GetWindow<OpenAITextureCreator>("OpenAI Texture Creator");
@@ -24,8 +24,8 @@ namespace OpenAI
         
         const string PROMPT_PREFS = "TextureCreator_Prompt";
 
-        readonly string[] modelOptions = new string[] { "gpt-image-1", "dall-e-3", "dall-e-2" };
-        private int selectedModelIndex = 0; // 初期値（例：dall-e-3）
+        readonly string[] modelOptions = new string[] { "dall-e-2", "dall-e-3", "gpt-image-1"};
+        private int selectedModelIndex = 0;
 
         readonly string[] spinner = new string[] { "|", "/", "-", "\\" };
         int spinnerIndex = 0;
@@ -71,7 +71,7 @@ namespace OpenAI
 
             if (string.IsNullOrEmpty(this.apiKey))
             {
-                GUILayout.Label("OpenAIのAPI KEYを入力してください", EditorStyles.helpBox);
+                GUILayout.Label("Input OpenAI API KEY", EditorStyles.helpBox);
                 return;
             }
 
@@ -82,10 +82,10 @@ namespace OpenAI
                         wordWrap = true
                     };
             this.prompt = EditorGUILayout.TextArea(this.prompt, style, GUILayout.Height(100));
-            //this.selectedModelIndex = EditorGUILayout.Popup("Model", this.selectedModelIndex, this.modelOptions);
 
+            this.selectedModelIndex = EditorGUILayout.Popup("Model", this.selectedModelIndex, this.modelOptions);
             this.selectedSizeIndex = EditorGUILayout.Popup("Size", this.selectedSizeIndex, this.SizeStr);
-            this.generateNumber = EditorGUILayout.IntField("生成枚数", this.generateNumber);
+            this.generateNumber = EditorGUILayout.IntField("Number of generations", this.generateNumber);
 
             EditorGUILayout.Space();
             // Add your GUI elements here
@@ -148,7 +148,7 @@ namespace OpenAI
             // JSONボディ
             string json = JsonUtility.ToJson(new ImageGenerationRequest
             {
-                model = "dall-e-2", //組織の認証が通るまでdall-e-2しか使えない
+                model = this.modelOptions[this.selectedModelIndex],
                 prompt = prompt,
                 n = this.generateNumber,
                 size = this.SizeStr[this.selectedSizeIndex],
