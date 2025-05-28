@@ -12,7 +12,7 @@ namespace OpenAI
 {
     public class OpenAITextureCreator : EditorWindow
     {
-        [MenuItem("Tools/OpenAI Texture Creator")]
+        [MenuItem("Tools/OpenAI/Texture Creator")]
         public static void ShowWindow()
         {
             GetWindow<OpenAITextureCreator>("OpenAI Texture Creator");
